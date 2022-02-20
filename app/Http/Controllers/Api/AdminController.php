@@ -23,20 +23,15 @@ class AdminController extends Controller
      */
     public function sendInvitation(Request $request) {
 
+
+
+        $request->validate([
+            'email' => 'required|email|max:255|unique:users,email'
+        ]);
+
+
         try {
 
-
-            $request->validate([
-                'email' => 'required|email|max:255'
-            ]);
-
-            $user = User::where([
-                'email' => $request->email
-            ])->first();
-
-            if($user) {
-                return sendError(500, 'User Already Registered');
-            }
             $hash = sha1($request->email);
 
             $user = User::withOutGlobalScope('active_users')->updateOrCreate([

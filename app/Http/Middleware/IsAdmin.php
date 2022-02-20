@@ -18,9 +18,7 @@ class IsAdmin
     {
 
         if(!\Auth::user()->user_role == 1) {
-            return response()->json([
-                'message' => 'unauthenticated'
-            ], 200);
+            return sendError(500, 'unauthenticated');
         }
         return $next($request);
     }

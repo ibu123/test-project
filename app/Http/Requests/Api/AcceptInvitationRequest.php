@@ -24,7 +24,7 @@ class AcceptInvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required|unique:users,user_name',
+            'user_name' => 'required|min:4|max:20|unique:users,user_name',
             'password' => 'required|max:255',
             'hash' => 'required|exists:users,hash'
         ];

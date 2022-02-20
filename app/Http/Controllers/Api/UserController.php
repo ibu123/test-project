@@ -22,7 +22,11 @@ class UserController extends Controller
 
         $user = User::withOutGlobalScope('active_users')->where([
             'hash' => $request->hash
-        ])->firstOrFail();
+        ])->whereNull('registered_at')->first();
+
+        if(!$user) {
+            return sendError(500, 'Invalid Hash');
+        }
 
         if($user && $user->hash == sha1($user->email)) {
                 $result = $user->update([
@@ -32,7 +36,7 @@ class UserController extends Controller
                 ]);
                 Notification::send($user, new SendOtp());
 
-                return sendResponse( $user, 'Please verify OTP send to your email');
+                return sendResponse( ['otp' => $user->otp ], 'Please verify OTP send to your email');
         }
 
     }
@@ -80,7 +84,11 @@ class UserController extends Controller
     public function register(Request $request) {
         $user = User::withOutGlobalScope('active_users')->where([
             'otp' => $request->otp
-        ])->first();
+        ])->whereNull('registered_at')->first();
+
+        if(!$user) {
+            return sendError(500, 'Invalid OTP');
+        }
 
         if($user) {
             $user->update([
