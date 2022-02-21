@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->tinyInteger('user_role')->default(0)->comment('0 = admin, 1 = user');
+            $table->tinyInteger('user_role')->default(0)->comment('1 = admin, 0 = user');
             $table->string('hash')->nullable(); // email hash
             $table->string('otp')->nullable();
             $table->rememberToken();
