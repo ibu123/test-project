@@ -26,6 +26,7 @@ class User extends Authenticatable
         'user_name',
         'avatar',
         'otp',
+        'user_role'
         'registered_at'
     ];
 
