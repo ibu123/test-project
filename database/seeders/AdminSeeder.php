@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'user_name' => 'admin',
             'password' => \Hash::make('admin'),
             'email' => 'admin@gmail.com',
+            'user_role' => 1
             'registered_at' => Carbon::now()
         ]);
     }
